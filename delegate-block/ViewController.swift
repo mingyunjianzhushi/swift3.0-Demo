@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController,TextViewControllerDelegate {
+	
+	var textField : UITextField?;
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -17,16 +19,36 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 		notificationBtn.frame = CGRect(x:80,y:90,width:100,height:30);
 		notificationBtn.setTitle("跳转页面", for: .normal);
 		notificationBtn.backgroundColor = UIColor.blue
-		notificationBtn.addTarget(self, action: #selector(notificationBtnClick), for: .touchUpInside);
+		notificationBtn.addTarget(self, action: #selector(nextBtnClick), for: .touchUpInside);
 		view.addSubview(notificationBtn);
 		self.navigationItem.title = "主页面"
 		NotificationCenter.default.addObserver(self, selector: #selector(notificationClick(notification:)), name: NSNotification.Name(rawValue: "name"), object: nil)
-		
+		self.textFieldFunc();
 	
 
 	}
 	
-	//
+	func textFieldFunc(){
+		textField = UITextField(frame:CGRect(x:10,y:200,width:200,height:30));
+		self.textField?.borderStyle = .roundedRect;//全写 UITextBorderStyle.roundedRect
+		self.view.addSubview(self.textField!);
+		self.textField?.placeholder = "请输入用户名";
+		self.textField?.textAlignment = .left;
+		//清除按钮
+		self.textField?.clearButtonMode = .always;
+		self.textField?.returnKeyType = .done;
+	
+	}
+	
+	//获取delegate
+	func appdeledate() {
+		
+				let appDelegate =	UIApplication.shared.delegate as! AppDelegate
+		
+				appDelegate.window?.rootViewController = TextViewController();
+	}
+	
+	//数组
 	func arrayMothod1() {
 		var array : Array<String>
 		array = Array();
@@ -48,6 +70,7 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 		
 	}
 	
+	//字符串demo
 	func stringMothod1() {
 		var a : String
 		a = "这是什么啊";
@@ -76,12 +99,23 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 		
 	}
 	
-	func notificationBtnClick(){
+	//通过闭包回传值
+	func nextBtnClick(){
+		
+		let str = self.textField?.text;
+		print(str!);
 		
 		let vc = TextViewController();
 		vc.delegate = self;
 		vc.myblock = { (message:String) -> Void in
 			print(message);
+		}
+		
+		
+		vc.addBlock = { (message:String ,name:String) -> String in
+			
+			let re = message + name;
+			return re;
 		}
 		
 		vc.loadData { (resultArray, result) in
@@ -98,22 +132,19 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 		let sun = vc.captureValue2(sums: 10);
 		print(sun);
 		
-		
-		//获取delegate
-//		let appDelegate =	UIApplication.shared.delegate as! AppDelegate
-//		
-//		appDelegate.window?.rootViewController = TextViewController();
 	
 		
 		vc.navigationItem.title = "二级页面"
 		self.navigationController?.pushViewController(vc, animated: true);
 	}
 	
+	//通知回调
 	func notificationClick(notification:NSNotification){
 		let userInfo = notification.userInfo;
 		print(userInfo!["action"]!);
 	}
 	
+	//delegate
 	func delegateClick(text: String) {
 		print("接收到数据"+text);
 	}

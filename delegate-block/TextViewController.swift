@@ -78,7 +78,11 @@ class TextViewController: UIViewController {
 		}
 		
 		if self.addBlock != nil {
-			self.addBlock!("添加闭包","新的");		}
+		let a =	self.addBlock!("添加闭包","新的");
+		//接收返回值
+			print(a);
+			
+		}
 		
 		
 	}
