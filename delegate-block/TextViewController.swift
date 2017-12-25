@@ -70,7 +70,7 @@ class TextViewController: UIViewController {
 	
 	}
 	
-	func blockBtnClick(){
+	@objc func blockBtnClick(){
 		print("闭包函数");
 		
 		if self.myblock != nil {
@@ -87,12 +87,12 @@ class TextViewController: UIViewController {
 		
 	}
 	
-	func delegateBtnClick(){
+	@objc func delegateBtnClick(){
 		print("代理函数");
 		self.delegate?.delegateClick(text: "我是代理");
 	}
 	
-	func notificationBtnClick(){
+	@objc func notificationBtnClick(){
 		print("通知");
 		let dict = ["action":"通知被点击回调的数据"];
 		NotificationCenter.default.post(name: NSNotification.Name("name"), object: self, userInfo: dict);

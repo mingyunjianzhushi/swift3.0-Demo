@@ -100,7 +100,7 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 	}
 	
 	//通过闭包回传值
-	func nextBtnClick(){
+	@objc func nextBtnClick(){
 		
 		let str = self.textField?.text;
 		print(str!);
@@ -139,7 +139,7 @@ class ViewController: UIViewController,TextViewControllerDelegate {
 	}
 	
 	//通知回调
-	func notificationClick(notification:NSNotification){
+	@objc func notificationClick(notification:NSNotification){
 		let userInfo = notification.userInfo;
 		print(userInfo!["action"]!);
 	}
